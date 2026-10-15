@@ -1,0 +1,16 @@
+# Postgres de desarrollo. Puerto 5434 para no chocar con otros proyectos (Dante usa 5433).
+services:
+  db:
+    image: postgres:16
+    container_name: kinormotors-db
+    environment:
+      POSTGRES_DB: kinormotors
+      POSTGRES_USER: kinormotors
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:?definila en tu .env}
+    ports:
+      - "5434:5432"
+    volumes:
+      - kinormotors-data:/var/lib/postgresql/data
+
+volumes:
+  kinormotors-data:
