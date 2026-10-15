@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: kinormotors-back
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5434/kinormotors}
+    username: ${SPRING_DATASOURCE_USERNAME:kinormotors}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+app:
+  jwt:
+    # Obligatorio (minimo 32 caracteres). Nunca se versiona.
+    secret: ${JWT_SECRET}
+    expiration-ms: ${APP_JWT_EXPIRATION_MS:28800000}
+  cors:
+    allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  admin:
+    email: ${ADMIN_EMAIL:}
+    password: ${ADMIN_PASSWORD:}
+    nombre: ${ADMIN_NOMBRE:Administrador}
+  # Sal para anonimizar la IP del visitante (se guarda un hash, no la IP).
+  tracking:
+    ip-salt: ${TRACKING_IP_SALT:cambiar-en-produccion}
+  rate-limit:
+    publico-por-minuto: ${RATE_LIMIT_PUBLICO_POR_MINUTO:60}
+    login-por-15-min: ${RATE_LIMIT_LOGIN:5}
